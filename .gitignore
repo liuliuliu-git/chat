@@ -1,0 +1,96 @@
+# ======================================
+# 📁 根目录通用忽略项
+# ======================================
+
+# macOS / Windows 系统垃圾文件
+.DS_Store
+Thumbs.db
+
+# IDE / 编辑器相关
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 环境变量文件
+.env
+.env*.local
+
+# 日志和进程文件
+*.log
+logs/
+*.pid
+*.pid.lock
+
+# 示例或占位文件
+app-example
+README.md~
+
+# ======================================
+# 📱 前端：chatapp（React Native + Expo）
+# ======================================
+
+chatapp/node_modules/
+chatapp/.expo/
+chatapp/.expo-shared/
+chatapp/dist/
+chatapp/web-build/
+chatapp/expo-env.d.ts
+chatapp/*.expo
+chatapp/*.expo.*
+
+# React Native 相关
+chatapp/android/
+chatapp/ios/
+chatapp/build/
+chatapp/.metro-cache/
+chatapp/.gradle/
+chatapp/.tsbuildinfo
+
+# 证书/密钥文件（务必忽略）
+chatapp/*.jks
+chatapp/*.keystore
+chatapp/*.p8
+chatapp/*.p12
+chatapp/*.key
+chatapp/*.mobileprovision
+chatapp/*.orig.*
+
+# 调试缓存
+chatapp/npm-debug.*
+chatapp/yarn-debug.*
+chatapp/yarn-error.*
+
+# ======================================
+# 🖥 后端：chatbackend（NestJS + TypeScript）
+# ======================================
+
+chatbackend/node_modules/
+chatbackend/dist/
+chatbackend/.cache/
+chatbackend/.tsbuildinfo
+chatbackend/tmp/
+chatbackend/temp/
+chatbackend/.eslintcache
+
+# 日志和数据库文件（如 SQLite）
+chatbackend/*.log
+chatbackend/logs/
+chatbackend/*.sqlite
+chatbackend/*.sqlite-journal
+
+# 测试和构建工具缓存
+chatbackend/test-results.json
+chatbackend/coverage/
+chatbackend/.turbo/
+chatbackend/.next/
+chatbackend/.parcel-cache
+
+# 环境变量
+chatbackend/.env
+chatbackend/.env*.local
+
+# Prisma（如使用）
+chatbackend/prisma/dev.db
+chatbackend/prisma/migrations/
+
