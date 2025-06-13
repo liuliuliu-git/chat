@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
@@ -22,7 +20,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       // autoLoadEntities: true, // 启用自动加载实体
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
