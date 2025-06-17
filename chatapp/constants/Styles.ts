@@ -145,6 +145,12 @@ export function createDynamicStyles(isDark: boolean) {
       backgroundColor: colors.background,
     } as ViewStyle,
     
+    scrollContainer: {
+      flexGrow: 1,
+      justifyContent: 'center',
+      paddingHorizontal: Theme.spacing.lg,
+    } as ViewStyle,
+    
     centerContainer: {
       flex: 1,
       justifyContent: 'center',
