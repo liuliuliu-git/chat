@@ -1,6 +1,8 @@
+import 'module-alias/register';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { PerformanceInterceptor } from '@/common/interceptors/performance.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +16,8 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document); // 设置文档访问路径为 /api
+  // 注册全局拦截器
+  app.useGlobalInterceptors(new PerformanceInterceptor());
   await app.listen(process.env.PORT ?? 3000);
 }
 
