@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { Link, router } from 'expo-router';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { useTheme, CommonStyles, createDynamicStyles } from '@/constants';
 
 // 表单验证schema
 const loginSchema = yup.object({
@@ -17,6 +18,8 @@ type LoginFormData = yup.InferType<typeof loginSchema>;
 
 export default function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false);
+  const { colors, isDark } = useTheme();
+  const styles = createDynamicStyles(isDark);
   
   const { control, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema),
@@ -29,7 +32,7 @@ export default function LoginScreen() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setIsLoading(true);
-      // TODO: 替换为实际的API地址
+      // TODO: 替换为实际的API地址以及信息
       const response = await axios.post('http://localhost:3000/auth/login', data);
       
       if (response.data.accessToken) {
@@ -51,18 +54,19 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.formContainer}>
       <Text style={styles.title}>登录</Text>
       
-      <View style={styles.form}>
+      <View style={{ width: '100%' }}>
         <Controller
           control={control}
           name="email"
           render={({ field: { onChange, value } }) => (
-            <View style={styles.inputContainer}>
+            <View style={CommonStyles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="邮箱"
+                placeholderTextColor={colors.inputPlaceholder}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 value={value}
@@ -79,10 +83,11 @@ export default function LoginScreen() {
           control={control}
           name="password"
           render={({ field: { onChange, value } }) => (
-            <View style={styles.inputContainer}>
+            <View style={CommonStyles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="密码"
+                placeholderTextColor={colors.inputPlaceholder}
                 secureTextEntry
                 value={value}
                 onChangeText={onChange}
@@ -95,18 +100,18 @@ export default function LoginScreen() {
         />
 
         <TouchableOpacity
-          style={styles.button}
+          style={styles.buttonPrimary}
           onPress={handleSubmit(onSubmit)}
           disabled={isLoading}
         >
           {isLoading ? (
-            <ActivityIndicator color="#fff" />
+            <ActivityIndicator color={colors.buttonText} />
           ) : (
             <Text style={styles.buttonText}>登录</Text>
           )}
         </TouchableOpacity>
 
-        <View style={styles.footer}>
+        <View style={CommonStyles.footer}>
           <Text style={styles.footerText}>还没有账号？</Text>
           <Link href="/(auth)/register" replace asChild>
             <TouchableOpacity>
@@ -117,61 +122,4 @@ export default function LoginScreen() {
       </View>
     </View>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
-    textAlign: 'center',
-  },
-  form: {
-    width: '100%',
-  },
-  inputContainer: {
-    marginBottom: 15,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    padding: 15,
-    borderRadius: 8,
-    fontSize: 16,
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 12,
-    marginTop: 5,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  footerText: {
-    color: '#666',
-  },
-  link: {
-    color: '#007AFF',
-    marginLeft: 5,
-  },
-}); 
+} 
